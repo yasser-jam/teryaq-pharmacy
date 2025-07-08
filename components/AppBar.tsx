@@ -1,7 +1,10 @@
 'use client';
 import { Flex, Heading, IconButton, Text } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, BellIcon } from '@chakra-ui/icons';
 import React from 'react';
+import { Avatar, Menu, Box, Flex as ChakraFlex } from '@chakra-ui/react';
+import NotificationMenu from './system/NotificationMenu';
+import ProfileMenu from './system/ProfileMenu';
 
 interface AppBarProps {
   onOpen: () => void;
@@ -26,11 +29,24 @@ const AppBar: React.FC<AppBarProps> = ({ onOpen }) => (
         variant='ghost'
         onClick={onOpen}
         mr={2}
+        color='gray.700'
+        _hover={{ bg: 'gray.100', color: 'blue.600' }}
       >
         <HamburgerIcon />
       </IconButton>
-
-      <Heading fontWeight={'light'} >TeryaQ</Heading>
+      <Heading
+        fontWeight={'light'}
+        bgClip="text"
+        color="gray.700"
+        fontSize={{ base: 'xl', md: '2xl' }}
+        letterSpacing="wide"
+      >
+        TeryaQ
+      </Heading>
+    </Flex>
+    <Flex align="center" gap={2}>
+      <NotificationMenu hasNotifications={true} />
+      <ProfileMenu />
     </Flex>
   </Flex>
 );
