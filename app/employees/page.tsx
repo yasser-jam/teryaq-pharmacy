@@ -1,5 +1,5 @@
 'use client';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, Heading, Flex, Button } from '@chakra-ui/react';
 import { EmployeeCard } from '../../components/employee/EmployeeCard';
 
 export default function EmployeesPage() {
@@ -35,17 +35,26 @@ export default function EmployeesPage() {
   ];
 
   return (
-    <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} gap={6}>
-      {employees.map((emp) => (
-        <EmployeeCard
-          key={emp.name}
-          name={emp.name}
-          phone={emp.phone}
-          gender={emp.gender as any}
-          role={emp.role}
-          address={emp.address}
-        />
-      ))}
-    </SimpleGrid>
+    <>
+      <Flex align='center' justify='space-between' mb={6}>
+        <Heading as='h1' size='2xl' fontWeight='medium' color='gray.800'>
+          Employees
+        </Heading>
+
+        <Button variant='solid' colorPalette="blue" paddingX={4}>Add Employee</Button>
+      </Flex>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} gap={6}>
+        {employees.map((emp) => (
+          <EmployeeCard
+            key={emp.name}
+            name={emp.name}
+            phone={emp.phone}
+            gender={emp.gender as any}
+            role={emp.role}
+            address={emp.address}
+          />
+        ))}
+      </SimpleGrid>
+    </>
   );
 }
