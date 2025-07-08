@@ -1,10 +1,11 @@
 'use client';
-import { Flex, Heading, IconButton, Text } from '@chakra-ui/react';
+import { Flex, Heading, IconButton, Text, Badge, Box } from '@chakra-ui/react';
 import { HamburgerIcon, BellIcon } from '@chakra-ui/icons';
 import React from 'react';
-import { Avatar, Menu, Box, Flex as ChakraFlex } from '@chakra-ui/react';
+import { Avatar, Menu, Flex as ChakraFlex } from '@chakra-ui/react';
 import NotificationMenu from './system/NotificationMenu';
 import ProfileMenu from './system/ProfileMenu';
+import StatusBadge from './system/StatusBadge';
 
 interface AppBarProps {
   onOpen: () => void;
@@ -36,15 +37,18 @@ const AppBar: React.FC<AppBarProps> = ({ onOpen }) => (
       </IconButton>
       <Heading
         fontWeight={'light'}
-        bgClip="text"
-        color="gray.700"
+        bgClip='text'
+        color='gray.700'
         fontSize={{ base: 'xl', md: '2xl' }}
-        letterSpacing="wide"
+        letterSpacing='wide'
       >
         TeryaQ
       </Heading>
     </Flex>
-    <Flex align="center" gap={2}>
+    <Flex align='center' gap={2}>
+      
+      <StatusBadge />
+
       <NotificationMenu hasNotifications={true} />
       <ProfileMenu />
     </Flex>
