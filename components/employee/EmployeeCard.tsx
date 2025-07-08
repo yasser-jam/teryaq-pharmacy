@@ -1,5 +1,6 @@
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { EmployeeAvatar } from '../system/EmployeeAvatar';
+import { MenuButton } from '../system/MenuButton';
 
 export interface EmployeeCardProps {
   name: string;
@@ -8,23 +9,12 @@ export interface EmployeeCardProps {
   role?: string;
 }
 
-const roleColor: Record<string, string> = {
-  admin: 'blue.400',
-  manager: 'purple.400',
-  staff: 'green.400',
-  default: 'gray.300',
-};
-
-export function EmployeeCard({
-  name,
-  phone,
-  gender = 'male',
-  role = 'default',
-}: EmployeeCardProps) {
-  const avatarBg = roleColor[role] || roleColor.default;
-
+export function EmployeeCard({ name, phone, gender = 'male', role = 'default' }: EmployeeCardProps) {
   return (
-    <Box p={6} borderRadius='lg' boxShadow='md' bg='white'>
+    <Box p={6} borderRadius='lg' boxShadow='md' bg='white' position='relative'>
+      <Box position='absolute' top={3} right={3} zIndex={1}>
+        <MenuButton onEdit={() => {}} onDelete={() => {}} />
+      </Box>
       <Flex align='center' gap={4}>
         <EmployeeAvatar name={name} gender={gender} role={role} />
         <Box>
