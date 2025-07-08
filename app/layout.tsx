@@ -9,6 +9,7 @@ import AppBar from "../components/AppBar";
 import Sidebar from "../components/Sidebar";
 import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
+import SidebarDrawer from "../components/SidebarDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +31,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [drawerOpen, setDrawerOpen] = React.useState(true);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
           <Flex>
-            <Sidebar />
+            <Sidebar isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
             <Box flex="1" minH="100vh" bg="gray.50">
-              <AppBar onOpen={() => {}} />
+              <AppBar onOpen={() => setDrawerOpen(!drawerOpen)} />
               <Box as="main" p={6}>
                 {children}
               </Box>
