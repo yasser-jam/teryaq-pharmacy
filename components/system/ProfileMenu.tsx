@@ -11,6 +11,7 @@ import {
 import { FiPhone, FiLogOut, FiGlobe } from 'react-icons/fi';
 import React from 'react';
 import { EmployeeAvatar } from './EmployeeAvatar';
+import RoleBadge from './RoleBadge';
 
 // Example user data (replace with real data as needed)
 const user = {
@@ -51,20 +52,7 @@ const ProfileMenu: React.FC = () => (
               </Flex>
             </Box>
           </Flex>
-          <Badge
-            colorScheme={user.roleColor}
-            fontSize='0.8em'
-            color='blue.500'
-            px={3}
-            py={1}
-            borderRadius='md'
-            position='absolute'
-            top={0.5}
-            right={0.5}
-            zIndex={2}
-          >
-            {user.role}
-          </Badge>
+          <RoleBadge role={user.role} color='blue.500' />
         </Box>
 
         <Box my={2} height='1px' width='100%' marginY={4} bg='gray.200' />
