@@ -7,7 +7,7 @@ export default function EmployeesPage() {
       name: 'Alice Johnson',
       phone: '555-1234',
       gender: 'female',
-      role: 'manager',
+      role: 'staff',
     },
   ];
 
