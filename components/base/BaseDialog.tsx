@@ -1,5 +1,6 @@
-import React from "react";
-import { Dialog, Button, CloseButton, Portal } from "@chakra-ui/react";
+import React from 'react';
+import { Dialog, Button, CloseButton, Portal } from '@chakra-ui/react';
+import BaseBtn from './BaseBtn';
 
 interface BaseDialogProps {
   title: string;
@@ -12,34 +13,49 @@ interface BaseDialogProps {
 
 const BaseDialog: React.FC<BaseDialogProps> = ({
   title,
-  width = "32rem",
+  width = '32rem',
   open,
   onSubmit,
   onClose,
   children,
 }) => {
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => { if (!e.open) onClose(); }}>
+    <Dialog.Root
+      open={open}
+      placement={'center'}
+      onOpenChange={(e) => {
+        if (!e.open) onClose();
+      }}
+    >
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content width={width} maxW="100vw">
+          <Dialog.Content width={width} padding={6} maxW='100vw'>
             <Dialog.Header>
-              <Dialog.Title>{title}</Dialog.Title>
+              <Dialog.Title fontSize={28}>{title}</Dialog.Title>
               <Dialog.CloseTrigger asChild>
-                <CloseButton onClick={onClose} size="sm" position="absolute" right={3} top={3} />
+                <CloseButton
+                  onClick={onClose}
+                  size='lg'
+                  position='absolute'
+                  right={3}
+                  top={3}
+                />
               </Dialog.CloseTrigger>
             </Dialog.Header>
-            <Dialog.Body>{children}</Dialog.Body>
-            <Dialog.Footer justifyContent="flex-end" gap={2}>
+            <Dialog.Body paddingY={6}>{children}</Dialog.Body>
+            <Dialog.Footer justifyContent='flex-end' gap={2}>
               <Dialog.ActionTrigger asChild>
-                <Button variant="ghost" mr={2} onClick={onClose}>
+                <BaseBtn variant='ghost' onClick={onClose}>
                   Cancel
-                </Button>
+                </BaseBtn>
               </Dialog.ActionTrigger>
-              <Button colorScheme="blue" onClick={onSubmit}>
+              <BaseBtn
+                btnProps={{ colorPalette: 'blue' }}
+                onClick={onClose}
+              >
                 Save
-              </Button>
+              </BaseBtn>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>
@@ -48,4 +64,4 @@ const BaseDialog: React.FC<BaseDialogProps> = ({
   );
 };
 
-export default BaseDialog; 
+export default BaseDialog;
