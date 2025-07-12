@@ -52,7 +52,7 @@ const BaseDialog: React.FC<BaseDialogProps> = ({
               </Dialog.ActionTrigger>
               <BaseBtn
                 btnProps={{ colorPalette: 'blue' }}
-                onClick={onClose}
+                onClick={onSubmit}
               >
                 Save
               </BaseBtn>
