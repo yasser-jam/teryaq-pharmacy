@@ -65,3 +65,28 @@ export const api = async function (
     throw err
   }
 }
+
+// Role and Permission API functions
+export const roleAPI = {
+  // Get all roles
+  getRoles: () => api('/roles'),
+  
+  // Get role by ID
+  getRole: (id: number) => api(`/roles/${id}`),
+  
+  // Create new role
+  createRole: (data: any) => api('/roles', { method: 'POST', body: data }),
+  
+  // Update role
+  updateRole: (id: number, data: any) => api(`/roles/${id}`, { method: 'PUT', body: data }),
+  
+  // Delete role
+  deleteRole: (id: number) => api(`/roles/${id}`, { method: 'DELETE' }),
+  
+  // Get all permissions
+  getPermissions: () => api('/permissions'),
+  
+  // Update role permissions
+  updateRolePermissions: (roleId: number, permissionIds: number[]) => 
+    api(`/roles/${roleId}/permissions`, { method: 'PUT', body: { permissions: permissionIds } }),
+};

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Box, Flex, IconButton, Text, VStack, Link } from '@chakra-ui/react';
-import { FaUser, FaPills, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaUser, FaPills, FaChevronLeft, FaChevronRight, FaCog } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import { Tooltip } from '@chakra-ui/react';
 import { useColorModeValue } from './ui/color-mode';
@@ -16,6 +16,11 @@ const navLinks = [
     label: 'Medicines',
     icon: <FaPills />,
     href: '/medicines',
+  },
+  {
+    label: 'Settings',
+    icon: <FaCog />,
+    href: '/settings',
   },
 ];
 

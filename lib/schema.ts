@@ -66,3 +66,42 @@ export const EMPLOYEE_SCHEMA = z.object({
 });
 
 export type Employee = z.infer<typeof EMPLOYEE_SCHEMA>;
+
+// Role and Permission Types
+export interface Permission {
+  id: number;
+  name: string;
+  description: string;
+  resource: string;
+  action: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
+  active: boolean;
+  systemGenerated: boolean;
+}
+
+export interface Role {
+  id: number;
+  name: string;
+  description: string;
+  permissions: Permission[];
+  createdAt: string;
+  updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
+  active: boolean;
+  system: boolean;
+  systemGenerated: boolean;
+}
+
+// Schema for role creation/update
+export const ROLE_SCHEMA = z.object({
+  name: z.string().min(1, 'Role name is required'),
+  description: z.string().min(1, 'Role description is required'),
+  permissions: z.array(z.number()).min(1, 'At least one permission is required'),
+  active: z.boolean().default(true),
+});
+
+export type RoleFormData = z.infer<typeof ROLE_SCHEMA>;
