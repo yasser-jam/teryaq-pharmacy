@@ -1,8 +1,11 @@
-'use client'
+'use client';
 import { ColumnDef } from '@tanstack/react-table';
 import BaseTable from '../../components/base/BaseTable';
-import { Badge } from '@chakra-ui/react';
+import { Badge, Flex } from '@chakra-ui/react';
 import { MenuButton } from '../../components/system/MenuButton';
+import BaseTitle from '../../components/base/BaseTitle';
+import BaseBtn from '../../components/base/BaseBtn';
+import { useRouter } from 'next/navigation';
 
 export default function Layout() {
   const columns: ColumnDef<any>[] = [
@@ -51,8 +54,17 @@ export default function Layout() {
     { id: 2, name: 'Salma', email: 'salma@example.com', status: 'inactive' },
   ];
 
+  const router = useRouter()
+
   return (
     <>
+      <Flex align='center' justify='space-between' mb={6}>
+        <BaseTitle>Medicines</BaseTitle>
+
+        <BaseBtn onClick={() => router.push('/medicines/create')}>
+          Add Medicine
+        </BaseBtn>
+      </Flex>
       <BaseTable columns={columns} data={data}></BaseTable>
     </>
   );
