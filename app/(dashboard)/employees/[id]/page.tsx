@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import EmployeeEditDialog from '../../../components/employee/EmployeeEditDialog';
-import { Employee } from '../../../lib/schema';
-import { api } from '../../../lib/api';
+import EmployeeEditDialog from '../../../../components/employee/EmployeeEditDialog';
+import { Employee } from '../../../../lib/schema';
+import { api } from '../../../../lib/api';
 
 export default function Page() {
   const router = useRouter();

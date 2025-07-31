@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import BaseTable from '../../components/base/BaseTable';
+import BaseTable from '../../../components/base/BaseTable';
 import { Badge, Flex, SimpleGrid, Button, HStack, Text } from '@chakra-ui/react';
-import { MenuButton } from '../../components/system/MenuButton';
-import BaseTitle from '../../components/base/BaseTitle';
-import BaseBtn from '../../components/base/BaseBtn';
+import { MenuButton } from '../../../components/system/MenuButton';
+import BaseTitle from '../../../components/base/BaseTitle';
+import BaseBtn from '../../../components/base/BaseBtn';
 import { useRouter } from 'next/navigation';
-import MedicineCard from '../../components/medicine/MedicineCard';
+import MedicineCard from '../../../components/medicine/MedicineCard';
 import { MdTableChart, MdGridView } from 'react-icons/md';
 
 type ViewMode = 'table' | 'cards';

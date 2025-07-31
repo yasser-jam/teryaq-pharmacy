@@ -36,15 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
-          <Flex>
-            <Sidebar isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-            <Box flex="1" minH="100vh" bg="#F8F9FA">
-              <AppBar onOpen={() => setDrawerOpen(!drawerOpen)} />
-              <Box as="main" p={6}>
-                {children}
-              </Box>
-            </Box>
-          </Flex>
+          {children}
         </Provider>
       </body>
     </html>

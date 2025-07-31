@@ -1,9 +1,9 @@
 'use client';
 
 import { SimpleGrid, Heading, Flex, Button } from '@chakra-ui/react';
-import { EmployeeCard } from '../../components/employee/EmployeeCard';
-import BaseBtn from '../../components/base/BaseBtn';
-import BaseTitle from '../../components/base/BaseTitle';
+import { EmployeeCard } from '../../../components/employee/EmployeeCard';
+import BaseBtn from '../../../components/base/BaseBtn';
+import BaseTitle from '../../../components/base/BaseTitle';
 import { useRouter } from 'next/navigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

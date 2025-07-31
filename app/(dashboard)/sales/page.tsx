@@ -7,10 +7,10 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import BaseTitle from '../../components/base/BaseTitle';
-import ProductSearch from '../../components/sales/ProductSearch';
-import PaymentSection from '../../components/sales/PaymentSection';
-import InvoiceDisplay from '../../components/sales/InvoiceDisplay';
+import BaseTitle from '../../../components/base/BaseTitle';
+import ProductSearch from '../../../components/sales/ProductSearch';
+import PaymentSection from '../../../components/sales/PaymentSection';
+import InvoiceDisplay from '../../../components/sales/InvoiceDisplay';
 
 interface InvoiceItem {
   id: number;

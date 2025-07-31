@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Box, Text, Button, Flex, Input, HStack } from '@chakra-ui/react';
 import { MdSearch, MdDelete } from 'react-icons/md';
-import BaseTitle from '../../components/base/BaseTitle';
+import BaseTitle from '../../../components/base/BaseTitle';
 
 interface InvoiceItem {
   id: number;
