@@ -2,7 +2,14 @@
 import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import BaseTable from '../../../components/base/BaseTable';
-import { Badge, Flex, SimpleGrid, Button, HStack, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Flex,
+  SimpleGrid,
+  Button,
+  HStack,
+  Text,
+} from '@chakra-ui/react';
 import { MenuButton } from '../../../components/system/MenuButton';
 import BaseTitle from '../../../components/base/BaseTitle';
 import BaseBtn from '../../../components/base/BaseBtn';
@@ -20,7 +27,7 @@ interface Medicine {
   image?: string;
 }
 
-export default function Layout() {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const [viewMode, setViewMode] = useState<ViewMode>('table');
 
   const columns: ColumnDef<Medicine>[] = [
@@ -33,7 +40,9 @@ export default function Layout() {
       header: 'Scientific Name',
       accessorKey: 'scientificName',
       cell: (info) => (
-        <span style={{ color: '#666', fontStyle: 'italic' }}>{String(info.getValue())}</span>
+        <span style={{ color: '#666', fontStyle: 'italic' }}>
+          {String(info.getValue())}
+        </span>
       ),
     },
     {
@@ -60,47 +69,48 @@ export default function Layout() {
   ];
 
   const data: Medicine[] = [
-    { 
-      id: 1, 
-      name: 'Aspirin', 
+    {
+      id: 1,
+      name: 'Aspirin',
       scientificName: 'Acetylsalicylic acid',
       status: 'active',
-      image: '/medicines/aspirin.jpg'
+      image: '/medicines/aspirin.jpg',
     },
-    { 
-      id: 2, 
-      name: 'Ibuprofen', 
+    {
+      id: 2,
+      name: 'Ibuprofen',
       scientificName: 'Isobutylphenylpropanoic acid',
       status: 'active',
-      image: '/medicines/ibuprofen.jpg'
+      image: '/medicines/ibuprofen.jpg',
     },
-    { 
-      id: 3, 
-      name: 'Amoxicillin', 
+    {
+      id: 3,
+      name: 'Amoxicillin',
       scientificName: 'Amoxicillin trihydrate',
       status: 'inactive',
-      image: '/medicines/amoxicillin.jpg'
+      image: '/medicines/amoxicillin.jpg',
     },
-    { 
-      id: 4, 
-      name: 'Paracetamol', 
+    {
+      id: 4,
+      name: 'Paracetamol',
       scientificName: 'N-acetyl-para-aminophenol',
       status: 'active',
-      image: '/medicines/paracetamol.jpg'
+      image: '/medicines/paracetamol.jpg',
     },
-    { 
-      id: 5, 
-      name: 'Omeprazole', 
-      scientificName: '5-methoxy-2-[[(4-methoxy-3,5-dimethyl-2-pyridinyl)methyl]sulfinyl]-1H-benzimidazole',
+    {
+      id: 5,
+      name: 'Omeprazole',
+      scientificName:
+        '5-methoxy-2-[[(4-methoxy-3,5-dimethyl-2-pyridinyl)methyl]sulfinyl]-1H-benzimidazole',
       status: 'active',
-      image: '/medicines/omeprazole.jpg'
+      image: '/medicines/omeprazole.jpg',
     },
-    { 
-      id: 6, 
-      name: 'Metformin', 
+    {
+      id: 6,
+      name: 'Metformin',
       scientificName: 'N,N-dimethylbiguanide',
       status: 'active',
-      image: '/medicines/metformin.jpg'
+      image: '/medicines/metformin.jpg',
     },
   ];
 
@@ -113,32 +123,32 @@ export default function Layout() {
 
         <HStack gap={4}>
           {/* View Mode Toggle */}
-          <HStack gap={1} bg="blue.500" p={1} borderRadius="lg">
+          <HStack gap={1} bg='blue.500' p={1} borderRadius='lg'>
             <Button
-              size="sm"
+              size='sm'
               variant={viewMode === 'table' ? 'solid' : 'ghost'}
               colorScheme={viewMode === 'table' ? 'white' : 'blue'}
               bg={viewMode === 'table' ? 'white' : 'transparent'}
               color={viewMode === 'table' ? 'blue.500' : 'white'}
               _hover={{
-                bg: viewMode === 'table' ? 'gray.50' : 'blue.600'
+                bg: viewMode === 'table' ? 'gray.50' : 'blue.600',
               }}
               onClick={() => setViewMode('table')}
-              borderRadius="md"
+              borderRadius='md'
             >
               <MdTableChart size={18} />
             </Button>
             <Button
-              size="sm"
+              size='sm'
               variant={viewMode === 'cards' ? 'solid' : 'ghost'}
               colorScheme={viewMode === 'cards' ? 'white' : 'blue'}
               bg={viewMode === 'cards' ? 'white' : 'transparent'}
               color={viewMode === 'cards' ? 'blue.500' : 'white'}
               _hover={{
-                bg: viewMode === 'cards' ? 'gray.50' : 'blue.600'
+                bg: viewMode === 'cards' ? 'gray.50' : 'blue.600',
               }}
               onClick={() => setViewMode('cards')}
-              borderRadius="md"
+              borderRadius='md'
             >
               <MdGridView size={18} />
             </Button>
@@ -165,6 +175,7 @@ export default function Layout() {
           ))}
         </SimpleGrid>
       )}
+      {children}
     </>
   );
 }

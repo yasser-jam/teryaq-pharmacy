@@ -113,3 +113,13 @@ export const LOGIN_SCHEMA = z.object({
 });
 
 export type LoginFormData = z.infer<typeof LOGIN_SCHEMA>;
+
+export const MEDICINE_SCHEMA = z.object({
+  tradeName: z.string().min(1, 'Trade name is required'),
+  scientificName: z.string().min(1, 'Scientific name is required'),
+  concentration: z.string().optional(),
+  size: z.string().optional(),
+  notes: z.string().optional(),
+  tax: z.number().optional(),
+  barcodes: z.array(z.string()).optional(),
+});
