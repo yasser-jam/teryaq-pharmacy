@@ -1,10 +1,26 @@
 'use client';
 import React, { useState } from 'react';
-import { Box, Flex, IconButton, Text, VStack, Link } from '@chakra-ui/react';
-import { FaUser, FaPills, FaChevronLeft, FaChevronRight, FaCog, FaHome, FaCashRegister } from 'react-icons/fa';
+import {
+  Box,
+  Flex,
+  IconButton,
+  Text,
+  VStack,
+  Link as LinkBtn,
+} from '@chakra-ui/react';
+import {
+  FaUser,
+  FaPills,
+  FaChevronLeft,
+  FaChevronRight,
+  FaCog,
+  FaHome,
+  FaCashRegister,
+} from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import { Tooltip } from '@chakra-ui/react';
 import { useColorModeValue } from './ui/color-mode';
+import Link from 'next/link';
 
 const navLinks = [
   {
@@ -83,22 +99,25 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           return (
             <Tooltip.Root key={link.href} open={false}>
               <Tooltip.Trigger asChild>
-                <Link
-                  href={link.href}
-                  display='flex'
-                  alignItems='center'
-                  px={4}
-                  py={3}
-                  borderRadius='md'
-                  bg={isActive ? activeBg : 'transparent'}
-                  _hover={{ bg: hoverBg }}
-                  fontWeight={isActive ? 'bold' : 'normal'}
-                  color={isActive ? activeColor : textColor}
-                  justifyContent='flex-start'
-                  transition='background 0.2s'
-                >
-                  {link.icon}
-                  {isOpen && <Text ml={3}>{link.label}</Text>}
+                <Link href={link.href} style={{ textDecoration: 'none !important' }}>
+                  <LinkBtn
+                    as={'div'}
+                    display='flex'
+                    alignItems='center'
+                    px={4}
+                    py={3}
+                    borderRadius='md'
+                    textDecoration='none !important'
+                    bg={isActive ? activeBg : 'transparent'}
+                    _hover={{ bg: hoverBg }}
+                    fontWeight={isActive ? 'bold' : 'normal'}
+                    color={isActive ? activeColor : textColor}
+                    justifyContent='flex-start'
+                    transition='background 0.2s'
+                  >
+                    {link.icon}
+                    {isOpen && <Text ml={3}>{link.label}</Text>}
+                  </LinkBtn>
                 </Link>
               </Tooltip.Trigger>
               {!isOpen && <Tooltip.Content>{link.label}</Tooltip.Content>}

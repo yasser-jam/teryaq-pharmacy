@@ -8,10 +8,10 @@ import {
   Stack,
   Tabs,
 } from '@chakra-ui/react';
-import { Role, Permission, RoleFormData } from '../../lib/schema';
-import { useColorModeValue } from '../../components/ui/color-mode';
-import BaseBtn from '../../components/base/BaseBtn';
-import RoleCard from '../../components/settings/RoleCard';
+import { Role, Permission, RoleFormData } from '../../../lib/schema';
+import { useColorModeValue } from '../../../components/ui/color-mode';
+import BaseBtn from '../../../components/base/BaseBtn';
+import RoleCard from '../../../components/settings/RoleCard';
 
 interface RolePermissionState {
   [roleId: number]: {
