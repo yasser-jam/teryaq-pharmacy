@@ -4,32 +4,29 @@ import { useRouter, useParams } from 'next/navigation';
 import EmployeeEditDialog from '../../../../components/employee/EmployeeEditDialog';
 import { Employee } from '../../../../lib/schema';
 import { api } from '../../../../lib/api';
+import { useMutation } from '@tanstack/react-query';
 
 interface EmployeeEditDialogProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }
 
 export default function Page({ params }: EmployeeEditDialogProps) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  
+
   const { id } = use(params);
   // Ensure component is mounted on client-side before rendering
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return null; // Prevent SSR/hydration mismatch
-  }
-
   const employeeId = id as string;
-  
+
   const isEdit = employeeId !== 'create';
-  
+
   // TODO: Fetch employee data if editing
   // const [employee, setEmployee] = React.useState<Employee | null>(null);
-  
+
   // React.useEffect(() => {
   //   if (isEdit) {
   //     // Fetch employee data
@@ -42,27 +39,39 @@ export default function Page({ params }: EmployeeEditDialogProps) {
   const handleSubmit = async (data: Employee) => {
     try {
       if (isEdit) {
-        // Update employee
-        await api(`/employees/${employeeId}`, {
-          method: 'PUT',
-          body: data,
-        });
-        console.log('Employee updated:', data);
+        updateEmployee(data);
       } else {
-        // Create new employee
-        await api('/employees', {
-          method: 'POST',
-          body: data,
-        });
-        console.log('Employee created:', data);
+        createEmployee(data);
       }
-      
-      // Navigate back to employees list
+
       router.replace('/employees');
     } catch (error) {
       console.error('Error saving employee:', error);
     }
   };
+
+  const { mutate: createEmployee, isPending: isCreating } = useMutation({
+    mutationKey: ['employees-create'],
+    mutationFn: async (data: Employee) =>
+      await api('/employees', {
+        method: 'POST',
+        body: {
+          ...data,
+          workingHours: [],
+        },
+      }),
+    onSuccess: () => {
+    },
+  });
+
+  const { mutate: updateEmployee, isPending: isUpdating } = useMutation({
+    mutationKey: ['employees-update'],
+    mutationFn: async (data: Employee) =>
+      await api(`/employees/${employeeId}`, {
+        method: 'PUT',
+        body: data,
+      }),
+  });
 
   const handleClose = () => {
     router.replace('/employees');
@@ -73,8 +82,8 @@ export default function Page({ params }: EmployeeEditDialogProps) {
       open={true}
       onClose={handleClose}
       onSubmit={handleSubmit}
+      loading={isCreating || isUpdating}
       isEdit={isEdit}
-      // employee={employee} // Pass employee data when editing
     />
   );
 }

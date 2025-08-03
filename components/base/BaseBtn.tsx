@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Spinner } from '@chakra-ui/react';
 import React from 'react';
 
 interface BaseBtnProps {
@@ -7,10 +7,11 @@ interface BaseBtnProps {
   btnProps?: any;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  loading?: boolean;
 }
 
 const BaseBtn = React.forwardRef<HTMLButtonElement, BaseBtnProps>(
-  ({ children, variant = 'solid', onClick, btnProps, type = 'button' }, ref) => {
+  ({ children, variant = 'solid', onClick, btnProps, type = 'button', loading = false }, ref) => {
     return (
       <Button
         variant={variant}
@@ -19,8 +20,10 @@ const BaseBtn = React.forwardRef<HTMLButtonElement, BaseBtnProps>(
         onClick={onClick}
         type={type}
         ref={ref}
+        loading={loading}
+        disabled={loading}
       >
-        {children}
+        {loading ? <Spinner /> : children}
       </Button>
     );
   }

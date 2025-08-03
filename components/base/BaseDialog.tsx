@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, Button, CloseButton, Portal } from '@chakra-ui/react';
+import { Dialog, Button, CloseButton, Portal, Spinner } from '@chakra-ui/react';
 import BaseBtn from './BaseBtn';
 
 interface BaseDialogProps {
@@ -9,6 +9,7 @@ interface BaseDialogProps {
   onSubmit: () => void;
   onClose: () => void;
   children?: React.ReactNode;
+  loading?: boolean;
 }
 
 const BaseDialog: React.FC<BaseDialogProps> = ({
@@ -18,6 +19,7 @@ const BaseDialog: React.FC<BaseDialogProps> = ({
   onSubmit,
   onClose,
   children,
+  loading = false,
 }) => {
   return (
     <Dialog.Root
