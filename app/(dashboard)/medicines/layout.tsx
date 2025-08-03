@@ -16,6 +16,8 @@ import BaseBtn from '../../../components/base/BaseBtn';
 import { useRouter } from 'next/navigation';
 import MedicineCard from '../../../components/medicine/MedicineCard';
 import { MdTableChart, MdGridView } from 'react-icons/md';
+import SysViewMode from '../../../components/system/SysViewMode';
+import BaseBadge from '../../../components/base/BaseBadge';
 
 type ViewMode = 'table' | 'cards';
 
@@ -51,9 +53,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       cell: (info) => {
         const value = String(info.getValue());
         return (
-          <Badge colorScheme={value === 'active' ? 'green' : 'red'}>
+          <BaseBadge colorPalette={info.row.original.status === 'active' ? 'green' : 'red'}>
             {value}
-          </Badge>
+          </BaseBadge>
         );
       },
     },
@@ -122,37 +124,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <BaseTitle>Medicines</BaseTitle>
 
         <HStack gap={4}>
-          {/* View Mode Toggle */}
-          <HStack gap={1} bg='blue.500' p={1} borderRadius='lg'>
-            <Button
-              size='sm'
-              variant={viewMode === 'table' ? 'solid' : 'ghost'}
-              colorScheme={viewMode === 'table' ? 'white' : 'blue'}
-              bg={viewMode === 'table' ? 'white' : 'transparent'}
-              color={viewMode === 'table' ? 'blue.500' : 'white'}
-              _hover={{
-                bg: viewMode === 'table' ? 'gray.50' : 'blue.600',
-              }}
-              onClick={() => setViewMode('table')}
-              borderRadius='md'
-            >
-              <MdTableChart size={18} />
-            </Button>
-            <Button
-              size='sm'
-              variant={viewMode === 'cards' ? 'solid' : 'ghost'}
-              colorScheme={viewMode === 'cards' ? 'white' : 'blue'}
-              bg={viewMode === 'cards' ? 'white' : 'transparent'}
-              color={viewMode === 'cards' ? 'blue.500' : 'white'}
-              _hover={{
-                bg: viewMode === 'cards' ? 'gray.50' : 'blue.600',
-              }}
-              onClick={() => setViewMode('cards')}
-              borderRadius='md'
-            >
-              <MdGridView size={18} />
-            </Button>
-          </HStack>
+          <SysViewMode
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+          />
 
           <BaseBtn onClick={() => router.push('/medicines/create')}>
             Add Medicine
