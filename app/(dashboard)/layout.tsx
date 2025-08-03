@@ -1,3 +1,4 @@
+'use client'
 import { Box, Flex } from "@chakra-ui/react";
 import AppBar from "../../components/AppBar";
 import Sidebar from "../../components/Sidebar";

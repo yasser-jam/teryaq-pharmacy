@@ -34,8 +34,8 @@ import {
   FaDollarSign,
   FaWarehouse,
 } from 'react-icons/fa';
-import { useColorModeValue } from '../components/ui/color-mode';
-import BaseBtn from '../components/base/BaseBtn';
+import { useColorModeValue } from '../../components/ui/color-mode';
+import BaseBtn from '../../components/base/BaseBtn';
 import Link from 'next/link';
 
 // Sample data - replace with real API calls
