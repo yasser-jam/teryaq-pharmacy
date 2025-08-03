@@ -16,7 +16,6 @@ export default function BaseBadge({
       paddingY={1}
       borderRadius='sm'
       fontSize='sm'
-      fontWeight='medium'
       border='1px solid'
     >
       {children}
