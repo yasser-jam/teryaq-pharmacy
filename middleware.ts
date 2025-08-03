@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const accessToken = request.cookies.get('t.access-token')?.value
+  const accessToken = request.cookies.get('tp.access-token')?.value
 
   // If the request is not authenticated and the pathname does not include 'auth', redirect to /auth/login
   if (!accessToken && !request.nextUrl.pathname.includes('/login')) {

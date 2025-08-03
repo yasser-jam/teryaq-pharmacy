@@ -32,14 +32,14 @@ export const api = async function (
 ) {
   try {
     // Add token manually
-    const token = getCookie('t.access-token')
+    const token = getCookie('tp.access-token')
 
     const res = await axiosInstance.request({
       
       url: optimizeUrl(url),
       method: options.method || 'GET',
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: token ? `Bearer ${token}` : undefined
       },
       params: options.params, // Axios handles URLSearchParams internally
       data: options.body, // Axios uses `data` instead of `body`
@@ -52,7 +52,7 @@ export const api = async function (
 
     if (status === 401 && window?.location?.pathname !== '/login') {
       // clear credentials
-      Cookies.remove('t.access-token')
+      Cookies.remove('tp.access-token')
 
       // redirect to login page
       window.location.replace('/login')
@@ -65,28 +65,3 @@ export const api = async function (
     throw err
   }
 }
-
-// Role and Permission API functions
-export const roleAPI = {
-  // Get all roles
-  getRoles: () => api('/roles'),
-  
-  // Get role by ID
-  getRole: (id: number) => api(`/roles/${id}`),
-  
-  // Create new role
-  createRole: (data: any) => api('/roles', { method: 'POST', body: data }),
-  
-  // Update role
-  updateRole: (id: number, data: any) => api(`/roles/${id}`, { method: 'PUT', body: data }),
-  
-  // Delete role
-  deleteRole: (id: number) => api(`/roles/${id}`, { method: 'DELETE' }),
-  
-  // Get all permissions
-  getPermissions: () => api('/permissions'),
-  
-  // Update role permissions
-  updateRolePermissions: (roleId: number, permissionIds: number[]) => 
-    api(`/roles/${roleId}/permissions`, { method: 'PUT', body: { permissions: permissionIds } }),
-};

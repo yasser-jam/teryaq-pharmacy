@@ -18,9 +18,9 @@ import SysField from '../../../components/system/SysField';
 import { useRouter } from 'next/navigation';
 import { api } from '../../../lib/api';
 import { useMutation } from '@tanstack/react-query';
+import { setCookie } from '../../../lib/utils';
 
 export default function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -37,17 +37,21 @@ export default function LoginPage() {
   });
 
   const { mutate: login, isPending } = useMutation({
-    mutationFn: (data: LoginFormData) => api('/login', {
+    mutationFn: (data: LoginFormData) => api('/pharmacy/login', {
       method: 'POST',
       body: data,
-    })
+    }),
+    onSuccess: (data) => {
+      console.log(data)
+      setCookie('tp.access-token', data.token)
+
+      router.push('/');
+    },
   })
 
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log(
-      data
-    );
+    login(data);
   };
 
   return (
@@ -100,10 +104,10 @@ export default function LoginPage() {
                   width="full"
                   size="lg"
                   colorPalette="blue"
-                  loading={isLoading}
+                  loading={isPending}
                   mt={2}
                 >
-                  {isLoading ? 'Signing in...' : 'Sign In'}
+                  {isPending ? 'Signing in...' : 'Sign In'}
                 </Button>
               </VStack>
             </form>
