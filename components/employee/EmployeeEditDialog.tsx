@@ -21,6 +21,7 @@ import BaseDialog from '../base/BaseDialog';
 import SysField from '../system/SysField';
 import BaseBtn from '../base/BaseBtn';
 import { EMPLOYEE_SCHEMA, Employee } from '../../lib/schema';
+import BaseSwitch from '../base/BaseSwitch';
 
 interface EmployeeEditDialogProps {
   open: boolean;
@@ -81,14 +82,6 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
   } = useForm<Employee>({
     resolver: zodResolver(EMPLOYEE_SCHEMA),
     defaultValues: {
-      firstName: employee?.firstName || '',
-      lastName: employee?.lastName || '',
-      email: employee?.email || '',
-      phoneNumber: employee?.phoneNumber || '',
-      status: employee?.status || 'ACTIVE',
-      dateOfHire: employee?.dateOfHire || '',
-      roleName: employee?.roleName || '',
-      pharmacyId: employee?.pharmacyId || 1,
       workingHours: employee?.workingHours || defaultWorkingHours,
     },
   });
@@ -209,39 +202,11 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
       </Grid>
 
       {/* Status Switch */}
-      <Box 
-        p={4} 
-        borderWidth={1} 
-        borderRadius="md" 
-        borderColor={errors.status ? 'red.300' : 'gray.300'}
-        bg="white"
-      >
-        <HStack justify="space-between" align="center">
-          <Box>
-            <Text fontSize="sm" fontWeight="medium" mb={1}>
-              Employee Status
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              {statusValue === 'ACTIVE' ? 'Employee is currently active' : 'Employee is currently inactive'}
-            </Text>
-          </Box>
-          <Switch.Root
-            size="lg"
-            colorPalette="green"
-            checked={statusValue === 'ACTIVE'}
-            onCheckedChange={(details) => {
-              setValue('status', details.checked ? 'ACTIVE' : 'INACTIVE');
-            }}
-          >
-            <Switch.Thumb />
-          </Switch.Root>
-        </HStack>
-        {errors.status && (
-          <Text color="red.500" fontSize="sm" mt={2}>
-            {errors.status.message}
-          </Text>
-        )}
-      </Box>
+      <BaseSwitch
+        error={errors.status?.message}
+        statusValue={statusValue}
+        setValue={(value: string) => setValue('status', value as 'ACTIVE' | 'INACTIVE')}
+      />
     </Stack>
   );
 

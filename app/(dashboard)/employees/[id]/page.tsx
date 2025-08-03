@@ -1,15 +1,19 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import EmployeeEditDialog from '../../../../components/employee/EmployeeEditDialog';
 import { Employee } from '../../../../lib/schema';
 import { api } from '../../../../lib/api';
 
-export default function Page() {
+interface EmployeeEditDialogProps {
+  params: Promise<{ id: string }>
+}
+
+export default function Page({ params }: EmployeeEditDialogProps) {
   const router = useRouter();
-  const params = useParams();
   const [mounted, setMounted] = useState(false);
   
+  const { id } = use(params);
   // Ensure component is mounted on client-side before rendering
   useEffect(() => {
     setMounted(true);
@@ -19,10 +23,9 @@ export default function Page() {
     return null; // Prevent SSR/hydration mismatch
   }
 
-  const employeeId = params?.id as string;
+  const employeeId = id as string;
   
-  // Determine if this is edit mode (id !== 'new') or add mode (id === 'new')
-  const isEdit = employeeId !== 'new';
+  const isEdit = employeeId !== 'create';
   
   // TODO: Fetch employee data if editing
   // const [employee, setEmployee] = React.useState<Employee | null>(null);

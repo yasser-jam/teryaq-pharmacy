@@ -43,7 +43,7 @@ const BaseDialog: React.FC<BaseDialogProps> = ({
                 />
               </Dialog.CloseTrigger>
             </Dialog.Header>
-            <Dialog.Body paddingY={6}>{children}</Dialog.Body>
+            <Dialog.Body paddingY={6} maxH='75vh' overflowX='hidden' overflowY='auto' mb={4}>{children}</Dialog.Body>
             <Dialog.Footer justifyContent='flex-end' gap={2}>
               <Dialog.ActionTrigger asChild>
                 <BaseBtn variant='ghost' onClick={onClose}>
