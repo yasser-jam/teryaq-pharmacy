@@ -16,6 +16,7 @@ import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import BaseDialog from '../../../../components/base/BaseDialog';
 import SysField from '../../../../components/system/SysField';
 import { api } from '../../../../lib/api';
+import SysSizeSelect from '../../../../components/system/SysSizeSelect';
 
 interface MedicineEditPageProps {
   params: Promise<{ id: string }>;
@@ -177,6 +178,7 @@ export default function Page({ params }: MedicineEditPageProps) {
                 error={errors.size?.message}
                 placeholder='Enter size (optional)'
               />
+              {/* <SysSizeSelect value={} setValue={setSize} /> */}
             </GridItem>
           </Grid>
 
