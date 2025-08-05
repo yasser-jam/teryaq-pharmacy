@@ -54,6 +54,7 @@ const BaseDialog: React.FC<BaseDialogProps> = ({
               </Dialog.ActionTrigger>
               <BaseBtn
                 btnProps={{ colorPalette: 'blue' }}
+                loading={loading}
                 onClick={onSubmit}
               >
                 Save

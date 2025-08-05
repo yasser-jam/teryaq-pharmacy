@@ -69,9 +69,6 @@ export default function Page({ params }: MedicineEditPageProps) {
         barcodes,
       };
 
-      console.log('updated');
-      console.log(medicineData);
-
       if (isEdit) {
         updateMedicine(medicineData);
       } else {
@@ -200,17 +197,6 @@ export default function Page({ params }: MedicineEditPageProps) {
                 error={errors.formId?.message}
                 placeholder='Select Form'
               />
-            </GridItem>
-          </Grid>
-
-          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
-            <GridItem>
-              {/* <SysField
-                label='Requires Prescription'
-                type='checkbox'
-                register={register('requiresPrescription')}
-                error={errors.requiresPrescription?.message}
-              /> */}
             </GridItem>
           </Grid>
 
