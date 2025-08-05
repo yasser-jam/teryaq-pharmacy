@@ -63,6 +63,7 @@ export default function Page({ params }: MedicineEditPageProps) {
 
   const handleFormSubmit = async (data: any) => {
     try {
+      console.log(data);
       const medicineData = {
         ...data,
         barcodes,
@@ -131,7 +132,10 @@ export default function Page({ params }: MedicineEditPageProps) {
       onSubmit={() => formRef.current?.requestSubmit()}
       loading={isCreating || isUpdating}
     >
-      <form ref={formRef} onSubmit={handleSubmit(handleFormSubmit)}>
+      <form ref={formRef} onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(handleFormSubmit)(e);
+      }}>
         <Stack gap={4} align='stretch'>
           <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
             <GridItem>
@@ -218,8 +222,8 @@ export default function Page({ params }: MedicineEditPageProps) {
                 register={register}
                 error={errors.tax?.message}
                 placeholder='Enter tax percentage'
-                step='0.01'
-                min='0'
+                step={0.01}
+                min={0}
               />
             </GridItem>
 

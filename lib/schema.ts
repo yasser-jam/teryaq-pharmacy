@@ -121,10 +121,10 @@ export const MEDICINE_SCHEMA = z.object({
   manufacturerId: z.string().min(1, 'Manufacturer is required'),
   size: z.string().optional(),
   notes: z.string().optional(),
-  tax: z.number().optional(),
+  tax: z.string().optional(),
   barcodes: z.array(z.string()).optional(),
   categoryIds: z.array(z.number()).optional(),
-  formId: z.number().optional(),
-  typeId: z.number().optional(),
+  formId: z.string().optional(),
+  typeId: z.string().optional(),
   requiresPrescription: z.boolean(),
 });
