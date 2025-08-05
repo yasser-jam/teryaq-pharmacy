@@ -29,3 +29,8 @@ export interface Type {
   id: number;
   name: string;
 }
+
+export interface Form {
+  id: number;
+  name: string;
+}

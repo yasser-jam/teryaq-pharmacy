@@ -24,6 +24,7 @@ import { MEDICINE_SCHEMA } from '../../../../lib/schema';
 import SysTypeSelect from '../../../../components/system/SysTypeSelect';
 import { medicineDefaultValues } from '../../../../lib/init';
 import BaseSwitch from '../../../../components/base/BaseSwitch';
+import SysFormSelect from '../../../../components/system/SysFormSelect';
 
 interface MedicineEditPageProps {
   params: Promise<{ id: string }>;
@@ -193,11 +194,11 @@ export default function Page({ params }: MedicineEditPageProps) {
               />
             </GridItem>
             <GridItem>
-              <SysField
+              <SysFormSelect
                 label='Form'
                 register={register('formId')}
                 error={errors.formId?.message}
-                placeholder='Enter form (optional)'
+                placeholder='Select Form'
               />
             </GridItem>
           </Grid>
