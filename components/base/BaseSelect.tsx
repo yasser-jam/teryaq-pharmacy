@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 
 interface BaseSelectProps {
-  name: string;
   label: string;
   items: Array<any>;
   itemTitle?: string;
@@ -24,7 +23,6 @@ interface BaseSelectProps {
 }
 
 export default function BaseSelect({
-  name,
   label,
   items,
   itemTitle = 'label',
@@ -57,10 +55,7 @@ export default function BaseSelect({
     <Field.Root invalid={!!error} >
       <Select.Root
         collection={collection}
-        value={[selectedValue]}
-        onValueChange={(e) => handleValueChange(e.value[0])}
-        {...(register && register(name))}
-        {...rest}
+        {...(register || {})}
       >
         <Select.Label>{label}</Select.Label>
         <Select.HiddenSelect />
