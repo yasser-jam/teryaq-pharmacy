@@ -2,6 +2,7 @@
 import React, { use, useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import {
   HStack,
@@ -11,12 +12,17 @@ import {
   GridItem,
   IconButton,
   Stack,
+  Textarea,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import BaseDialog from '../../../../components/base/BaseDialog';
 import SysField from '../../../../components/system/SysField';
 import { api } from '../../../../lib/api';
-import SysSizeSelect from '../../../../components/system/SysSizeSelect';
+import SysManufacturersSelect from '../../../../components/system/SysManufacturersSelect';
+import z from 'zod';
+import { MEDICINE_SCHEMA } from '../../../../lib/schema';
+import SysTypeSelect from '../../../../components/system/SysTypeSelect';
+import { medicineDefaultValues } from '../../../../lib/init';
 
 interface MedicineEditPageProps {
   params: Promise<{ id: string }>;
@@ -28,7 +34,8 @@ export default function Page({ params }: MedicineEditPageProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { id } = use(params);
-  
+
+  type formData = z.infer<typeof MEDICINE_SCHEMA>;
 
   const medicineId = id as string;
   const isEdit = medicineId !== 'create';
@@ -49,22 +56,9 @@ export default function Page({ params }: MedicineEditPageProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{
-    tradeName: string;
-    scientificName: string;
-    concentration: string;
-    size: string;
-    notes: string;
-    tax: number;
-  }>({
-    defaultValues: {
-      tradeName: '',
-      scientificName: '',
-      concentration: '',
-      size: '',
-      notes: '',
-      tax: 0,
-    },
+  } = useForm<formData>({
+    resolver: zodResolver(MEDICINE_SCHEMA),
+    defaultValues: {},
   });
 
   const handleFormSubmit = async (data: any) => {
@@ -73,7 +67,7 @@ export default function Page({ params }: MedicineEditPageProps) {
         ...data,
         barcodes,
       };
-      
+
       if (isEdit) {
         updateMedicine(medicineData);
       } else {
@@ -182,24 +176,77 @@ export default function Page({ params }: MedicineEditPageProps) {
             </GridItem>
           </Grid>
 
-          <SysField
-            label='Tax (%)'
-            name='tax'
-            type='number'
-            register={register}
-            error={errors.tax?.message}
-            placeholder='Enter tax percentage'
-            step='0.01'
-            min='0'
-          />
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
+            <GridItem>
+              <SysTypeSelect
+                name='typeId'
+                label='Type'
+                register={register}
+                error={errors.typeId?.message}
+                placeholder='Select Type'
+              />
+            </GridItem>
+            <GridItem>
+              <SysField
+                label='Form'
+                name='formId'
+                register={register}
+                error={errors.formId?.message}
+                placeholder='Enter form (optional)'
+              />
+            </GridItem>
+          </Grid>
 
-          <SysField
-            label='Notes'
-            name='notes'
-            register={register}
-            error={errors.notes?.message}
-            placeholder='Enter additional notes (optional)'
-          />
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
+            <GridItem>
+              {/* <SysField
+                label='Requires Prescription'
+                name='requiresPrescription'
+                type='checkbox'
+                register={register}
+                error={errors.requiresPrescription?.message}
+              /> */}
+            </GridItem>
+          </Grid>
+
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
+            <GridItem>
+              <SysField
+                label='Tax (%)'
+                name='tax'
+                type='number'
+                register={register}
+                error={errors.tax?.message}
+                placeholder='Enter tax percentage'
+                step='0.01'
+                min='0'
+              />
+            </GridItem>
+
+            <GridItem>
+              <SysManufacturersSelect
+                name='manufacturerId'
+                label='Manufacturer'
+                register={register}
+                error={errors.manufacturerId?.message}
+                placeholder='Select manufacturer'
+              />
+            </GridItem>
+          </Grid>
+
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(1, 1fr)' }} gap={4}>
+            <GridItem>
+              <SysField
+                label='Notes'
+                name='notes'
+                register={register}
+                error={errors.notes?.message}
+                placeholder='Enter additional notes (optional)'
+                as='textarea'
+                rows={4}
+              />
+            </GridItem>
+          </Grid>
 
           {/* Barcodes Section */}
           <Box>

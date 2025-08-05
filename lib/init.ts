@@ -28,3 +28,18 @@ export const masterProductDefaultValues = {
   manufacturer: '',
   categories: [],
 }; 
+
+export const medicineDefaultValues = {
+  tradeName: '',
+  scientificName: '',
+  concentration: '',
+  size: '',
+  notes: '',
+  tax: 0,
+  barcodes: [],
+  requiresPrescription: false,
+  typeId: 0,
+  formId: 0,
+  manufacturerId: 0,
+  categoryIds: [],
+};

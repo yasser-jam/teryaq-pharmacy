@@ -19,3 +19,13 @@ export interface MedicineTranslation {
   scientificName: string;
   languageCode: string;
 }
+
+export interface Manufacturer {
+  id: number
+  name: string
+}
+
+export interface Type {
+  id: number;
+  name: string;
+}

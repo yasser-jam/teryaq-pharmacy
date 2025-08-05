@@ -1,6 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { createListCollection, Field, Select } from '@chakra-ui/react';
+import {
+  createListCollection,
+  Field,
+  Portal,
+  Select,
+  Spinner,
+} from '@chakra-ui/react';
 
 interface BaseSelectProps {
   name: string;
@@ -13,6 +19,7 @@ interface BaseSelectProps {
   register?: ReturnType<any>;
   error?: string;
   placeholder?: string;
+  loading?: boolean;
   [x: string]: any;
 }
 
@@ -27,12 +34,13 @@ export default function BaseSelect({
   register,
   error,
   placeholder = 'Select an option',
+  loading = false,
   ...rest
 }: BaseSelectProps) {
   const [selectedValue, setSelectedValue] = useState(value || '');
 
   const collection = createListCollection({
-    items: items.map(item => ({
+    items: items.map((item) => ({
       label: item[itemTitle],
       value: item[itemValue],
     })),
@@ -46,8 +54,7 @@ export default function BaseSelect({
   };
 
   return (
-    <Field.Root invalid={!!error}>
-      <Field.Label htmlFor={name}>{label}</Field.Label>
+    <Field.Root invalid={!!error} >
       <Select.Root
         collection={collection}
         value={[selectedValue]}
@@ -55,18 +62,34 @@ export default function BaseSelect({
         {...(register && register(name))}
         {...rest}
       >
-        <Select.Trigger>
-          <Select.ValueText placeholder={placeholder} />
-        </Select.Trigger>
-        <Select.Content>
-          {collection.items.map((item) => (
-            <Select.Item key={item.value} item={item}>
-              {item.label}
-            </Select.Item>
-          ))}
-        </Select.Content>
+        <Select.Label>{label}</Select.Label>
+        <Select.HiddenSelect />
+        <Select.Control>
+          <Select.Trigger paddingX={4} cursor="pointer">
+            <Select.ValueText placeholder={placeholder} />
+          </Select.Trigger>
+          <Select.IndicatorGroup paddingX={4}> 
+            {loading && (
+              <Spinner size='xs' borderWidth='1.5px' color='fg.muted' />
+            )}
+            <Select.Indicator />
+          </Select.IndicatorGroup>
+        </Select.Control>
+        <Portal>
+          <Select.Positioner>
+            <Select.Content zIndex={9999}>
+              {collection.items.map((item) => (
+                <Select.Item item={item} key={item.value} paddingX={4} paddingY={2} cursor="pointer">
+                  {item.label}
+                  <Select.ItemIndicator />
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Positioner>
+        </Portal>
       </Select.Root>
+
       <Field.ErrorText>{error}</Field.ErrorText>
     </Field.Root>
   );
-} 
+}

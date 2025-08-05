@@ -18,6 +18,7 @@ import MedicineCard from '../../../components/medicine/MedicineCard';
 import { MdTableChart, MdGridView } from 'react-icons/md';
 import SysViewMode from '../../../components/system/SysViewMode';
 import BaseBadge from '../../../components/base/BaseBadge';
+import BaseTest from '../../../components/base/BaseTest';
 
 type ViewMode = 'table' | 'cards';
 
@@ -53,7 +54,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       cell: (info) => {
         const value = String(info.getValue());
         return (
-          <BaseBadge colorPalette={info.row.original.status === 'active' ? 'green' : 'red'}>
+          <BaseBadge
+            colorPalette={
+              info.row.original.status === 'active' ? 'green' : 'red'
+            }
+          >
             {value}
           </BaseBadge>
         );
@@ -124,10 +129,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <BaseTitle>Medicines</BaseTitle>
 
         <HStack gap={4}>
-          <SysViewMode
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-          />
+          <SysViewMode viewMode={viewMode} setViewMode={setViewMode} />
 
           <BaseBtn onClick={() => router.push('/medicines/create')}>
             Add Medicine
@@ -150,6 +152,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           ))}
         </SimpleGrid>
       )}
+
       {children}
     </>
   );
