@@ -2,14 +2,18 @@ import { Box, HStack, Switch, Text } from '@chakra-ui/react';
 
 interface BaseSwitchProps {
   error?: string;
-  statusValue: string;
+  statusValue: string | boolean;
   setValue: (value: string) => void;
+  title?: string;
+  subtitle?: string;
 }
 
 export default function BaseSwitch({
   error,
   statusValue,
   setValue,
+  title = 'Employee Status',
+  subtitle  = 'Employee Status',
 }: BaseSwitchProps) {
   return (
     <Box
@@ -22,19 +26,21 @@ export default function BaseSwitch({
       <HStack justify='space-between' align='center'>
         <Box>
           <Text fontSize='sm' fontWeight='medium' mb={1}>
-            Employee Status
+            {title}
           </Text>
           <Text fontSize='sm' color='gray.600'>
-            {statusValue === 'ACTIVE'
-              ? 'Employee is currently active'
-              : 'Employee is currently inactive'}
+            {subtitle}
           </Text>
         </Box>
-        <Switch.Root colorPalette={'green'} checked={statusValue === 'ACTIVE'} onCheckedChange={(details: any) => {
+        <Switch.Root
+          colorPalette={'green'}
+          checked={statusValue === 'ACTIVE' || statusValue === true}
+          onCheckedChange={(details: any) => {
             setValue(details.checked ? 'ACTIVE' : 'INACTIVE');
-          }}>
+          }}
+        >
           <Switch.HiddenInput />
-          <Switch.Control  />
+          <Switch.Control />
         </Switch.Root>
       </HStack>
       {error && (

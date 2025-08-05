@@ -126,5 +126,5 @@ export const MEDICINE_SCHEMA = z.object({
   categoryIds: z.array(z.number()).optional(),
   formId: z.string().optional(),
   typeId: z.string().optional(),
-  requiresPrescription: z.boolean(),
+  requiresPrescription: z.boolean().default(false),
 });

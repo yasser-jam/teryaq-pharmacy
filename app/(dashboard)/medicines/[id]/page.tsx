@@ -23,6 +23,7 @@ import z from 'zod';
 import { MEDICINE_SCHEMA } from '../../../../lib/schema';
 import SysTypeSelect from '../../../../components/system/SysTypeSelect';
 import { medicineDefaultValues } from '../../../../lib/init';
+import BaseSwitch from '../../../../components/base/BaseSwitch';
 
 interface MedicineEditPageProps {
   params: Promise<{ id: string }>;
@@ -34,8 +35,6 @@ export default function Page({ params }: MedicineEditPageProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { id } = use(params);
-
-  type formData = z.infer<typeof MEDICINE_SCHEMA>;
 
   const medicineId = id as string;
   const isEdit = medicineId !== 'create';
@@ -55,19 +54,22 @@ export default function Page({ params }: MedicineEditPageProps) {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
-  } = useForm<formData>({
+  } = useForm({
     resolver: zodResolver(MEDICINE_SCHEMA),
-    defaultValues: {},
   });
 
   const handleFormSubmit = async (data: any) => {
     try {
-      console.log(data);
       const medicineData = {
         ...data,
         barcodes,
       };
+
+      console.log('updated');
+      console.log(medicineData);
 
       if (isEdit) {
         updateMedicine(medicineData);
@@ -123,6 +125,8 @@ export default function Page({ params }: MedicineEditPageProps) {
     setBarcodes(newBarcodes);
   };
 
+  const requiresPrescription = watch('requiresPrescription');
+
   return (
     <BaseDialog
       title={isEdit ? 'Edit Medicine' : 'Add New Medicine'}
@@ -132,17 +136,19 @@ export default function Page({ params }: MedicineEditPageProps) {
       onSubmit={() => formRef.current?.requestSubmit()}
       loading={isCreating || isUpdating}
     >
-      <form ref={formRef} onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(handleFormSubmit)(e);
-      }}>
+      <form
+        ref={formRef}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(handleFormSubmit)(e);
+        }}
+      >
         <Stack gap={4} align='stretch'>
           <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
             <GridItem>
               <SysField
                 label='Trade Name'
-                name='tradeName'
-                register={register}
+                register={register('tradeName')}
                 error={errors.tradeName?.message}
                 placeholder='Enter trade name'
               />
@@ -150,8 +156,7 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Scientific Name'
-                name='scientificName'
-                register={register}
+                register={register('scientificName')}
                 error={errors.scientificName?.message}
                 placeholder='Enter scientific name'
               />
@@ -162,8 +167,7 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Concentration'
-                name='concentration'
-                register={register}
+                register={register('concentration')}
                 error={errors.concentration?.message}
                 placeholder='Enter concentration (optional)'
               />
@@ -171,8 +175,7 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Size'
-                name='size'
-                register={register}
+                register={register('size')}
                 error={errors.size?.message}
                 placeholder='Enter size (optional)'
               />
@@ -183,9 +186,8 @@ export default function Page({ params }: MedicineEditPageProps) {
           <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
             <GridItem>
               <SysTypeSelect
-                name='typeId'
                 label='Type'
-                register={register}
+                register={register('typeId')}
                 error={errors.typeId?.message}
                 placeholder='Select Type'
               />
@@ -193,8 +195,7 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Form'
-                name='formId'
-                register={register}
+                register={register('formId')}
                 error={errors.formId?.message}
                 placeholder='Enter form (optional)'
               />
@@ -205,9 +206,8 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               {/* <SysField
                 label='Requires Prescription'
-                name='requiresPrescription'
                 type='checkbox'
-                register={register}
+                register={register('requiresPrescription')}
                 error={errors.requiresPrescription?.message}
               /> */}
             </GridItem>
@@ -217,21 +217,16 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Tax (%)'
-                name='tax'
-                type='number'
-                register={register}
+                register={register('tax')}
                 error={errors.tax?.message}
                 placeholder='Enter tax percentage'
-                step={0.01}
-                min={0}
               />
             </GridItem>
 
             <GridItem>
               <SysManufacturersSelect
-                name='manufacturerId'
                 label='Manufacturer'
-                register={register}
+                register={register('manufacturerId')}
                 error={errors.manufacturerId?.message}
                 placeholder='Select manufacturer'
               />
@@ -242,12 +237,26 @@ export default function Page({ params }: MedicineEditPageProps) {
             <GridItem>
               <SysField
                 label='Notes'
-                name='notes'
-                register={register}
+                register={register('notes')}
                 error={errors.notes?.message}
                 placeholder='Enter additional notes (optional)'
-                as='textarea'
-                rows={4}
+                type='textarea'
+              />
+            </GridItem>
+          </Grid>
+
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(1, 1fr)' }} gap={4}>
+            <GridItem>
+              <BaseSwitch
+                statusValue={!!requiresPrescription}
+                subtitle='Requires Prescription'
+                title='Requires Prescription'
+                setValue={() =>
+                  setValue(
+                    'requiresPrescription',
+                    !requiresPrescription
+                  )
+                }
               />
             </GridItem>
           </Grid>
