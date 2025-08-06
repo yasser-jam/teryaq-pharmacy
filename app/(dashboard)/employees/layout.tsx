@@ -5,38 +5,16 @@ import { EmployeeCard } from '../../../components/employee/EmployeeCard';
 import BaseBtn from '../../../components/base/BaseBtn';
 import BaseTitle from '../../../components/base/BaseTitle';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '../../../lib/api';
+import { Employee } from '../../../lib/types';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const employees = [
-    {
-      name: 'Alice Johnson',
-      phone: '555-1234',
-      gender: 'female',
-      role: 'manager',
-      address: 'Downtown',
-    },
-    {
-      name: 'Bob Smith',
-      phone: '555-5678',
-      gender: 'male',
-      role: 'admin',
-      address: 'Uptown',
-    },
-    {
-      name: 'Charlie Brown',
-      phone: '555-8765',
-      gender: 'male',
-      role: 'staff',
-      address: 'Midtown',
-    },
-    {
-      name: 'Diana Prince',
-      phone: '555-4321',
-      gender: 'female',
-      role: 'staff',
-      address: 'Harbor',
-    },
-  ];
+
+  const { data:employees } = useQuery<Employee[]>({
+    queryKey: ['employees'],
+    queryFn: () => api('/employees'),
+  })
 
   const router = useRouter()
 
@@ -49,14 +27,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Flex>
 
       <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} gap={6}>
-        {employees.map((emp) => (
+        {employees?.map((emp) => (
           <EmployeeCard
-            key={emp.name}
-            name={emp.name}
-            phone={emp.phone}
-            gender={emp.gender as any}
-            role={emp.role}
-            address={emp.address}
+            key={emp.id}
+            name={emp.firstName + ' ' + emp.lastName}
+            phone={emp.phoneNumber}
+            email={emp.email}
+            role={emp.role ?? ''}
           />
         ))}
       </SimpleGrid>

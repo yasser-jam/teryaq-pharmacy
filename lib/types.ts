@@ -74,3 +74,36 @@ export interface SaleRecord {
   status: string;
   items: SaleItemRecord[];
 }
+
+type DaysOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+export interface WorkingHour {
+  daysOfWeek: DaysOfWeek[];
+  shifts: {
+    startTime: {
+      hour: string
+      minute: string
+      second: string
+      nano: string
+    },
+    endTime: {
+      hour: string
+      minute: string
+      second: string
+      nano: string
+    },
+    description: string
+  }[]
+}
+
+export interface Employee {
+  id: number;
+  firstName: string;
+  lastName: string;
+  roleId: number;
+  status: 'ACTIVE' | 'INACTIVE';
+  phoneNumber: string;
+  email: string;
+  role?: string;
+  dateOfHire?: string;
+  workingHours: WorkingHour[];
+}

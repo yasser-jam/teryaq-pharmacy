@@ -58,6 +58,7 @@ export default function Page({ params }: EmployeeEditDialogProps) {
         body: {
           ...data,
           workingHours: [],
+          pharmacyId: 1702
         },
       }),
     onSuccess: () => {

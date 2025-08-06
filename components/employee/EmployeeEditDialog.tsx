@@ -22,6 +22,7 @@ import SysField from '../system/SysField';
 import BaseBtn from '../base/BaseBtn';
 import { EMPLOYEE_SCHEMA, Employee } from '../../lib/schema';
 import BaseSwitch from '../base/BaseSwitch';
+import SysRoleSelect from '../system/SysRoleSelect';
 // import BaseDatepicker from '../base/BaseDatepicker';
 
 interface EmployeeEditDialogProps {
@@ -159,8 +160,7 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
         <GridItem>
           <SysField
             label='First Name'
-            name='firstName'
-            register={register}
+            register={register('firstName')}
             error={errors.firstName?.message}
             placeholder='Enter first name'
           />
@@ -168,8 +168,7 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
         <GridItem>
           <SysField
             label='Last Name'
-            name='lastName'
-            register={register}
+            register={register('lastName')}
             error={errors.lastName?.message}
             placeholder='Enter last name'
           />
@@ -178,17 +177,15 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
 
       <SysField
         label='Email'
-        name='email'
+        register={register('email')}
         type='email'
-        register={register}
         error={errors.email?.message}
         placeholder='Enter email address'
       />
 
       <SysField
         label='Phone Number'
-        name='phoneNumber'
-        register={register}
+        register={register('phoneNumber')}
         error={errors.phoneNumber?.message}
         placeholder='Enter phone number'
       />
@@ -197,9 +194,8 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
         <GridItem>
           <SysField
             label='Date of Hire'
-            name='dateOfHire'
             type='date'
-            register={register}
+            register={register('dateOfHire')}
             error={errors.dateOfHire?.message}
           />
 
@@ -209,10 +205,9 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
           /> */}
         </GridItem>
         <GridItem>
-          <SysField
+          <SysRoleSelect
             label='Role Name'
-            name='roleName'
-            register={register}
+            register={register('roleName')}
             error={errors.roleName?.message}
             placeholder='Enter role'
           />
