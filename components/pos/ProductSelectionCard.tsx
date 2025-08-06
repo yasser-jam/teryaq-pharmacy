@@ -6,13 +6,11 @@ import {
   HStack,
   Text,
   Select,
-  Input,
-  InputGroup,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import ProductSelect from './ProductSelect';
 
 export default function ProductSelectionCard() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
   // Mock categories - will be replaced with real data later
@@ -39,32 +37,12 @@ export default function ProductSelectionCard() {
           Product Selection
         </Text>
 
-        {/* Product Search */}
-        <Box>
-          <Text fontSize='sm' fontWeight='medium' color='gray.700' mb={2}>
-            Search Product
-          </Text>
-          <InputGroup>
-            <>
-              <Box
-                position='absolute'
-                left={3}
-                top='50%'
-                transform='translateY(-50%)'
-                zIndex={2}
-                pointerEvents='none'
-              >
-                <SearchIcon color='gray.400' />
-              </Box>
-              <Input
-                placeholder='Search by name, barcode, or code...'
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                pl={8}
-              />
-            </>
-          </InputGroup>
-        </Box>
+        {/* Product Selection */}
+        <ProductSelect
+          value={selectedProduct}
+          onChange={setSelectedProduct}
+          placeholder='Select a product...'
+        />
 
         {/* Quick Actions */}
         <Box>
