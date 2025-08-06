@@ -128,3 +128,13 @@ export const MEDICINE_SCHEMA = z.object({
   typeId: z.string().optional(),
   requiresPrescription: z.boolean().default(false),
 });
+
+
+export const REGISTER_SCHEMA = z.object({
+  newPassword: z.string().min(1),
+  location: z.string().min(1),
+  pharmacyEmail: z.string().min(1),
+  pharmacyPhone: z.string().min(1),
+  managerFirstName: z.string().min(1),
+  managerLastName: z.string().min(1),
+})
