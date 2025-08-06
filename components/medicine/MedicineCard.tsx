@@ -1,14 +1,9 @@
 import { Box, Card, Text, Avatar, VStack, HStack } from '@chakra-ui/react';
 import { MenuButton } from '../system/MenuButton';
+import { Medicine } from '../../lib/types';
 
 interface MedicineCardProps {
-  medicine: {
-    id: number;
-    name: string;
-    scientificName: string;
-    image?: string;
-    status?: string;
-  };
+  medicine: Medicine;
   onEdit?: () => void;
   onDelete?: () => void;
 }
@@ -36,7 +31,7 @@ export default function MedicineCard({ medicine, onEdit, onDelete }: MedicineCar
               size="lg"
               colorPalette="blue"
             >
-              <Avatar.Fallback name={medicine.name} />
+              <Avatar.Fallback name={medicine.tradeName} />
             </Avatar.Root>
             
             <MenuButton
@@ -53,7 +48,7 @@ export default function MedicineCard({ medicine, onEdit, onDelete }: MedicineCar
               color="gray.800"
               lineHeight="tight"
             >
-              {medicine.name}
+              {medicine.tradeName}
             </Text>
             
             <Text

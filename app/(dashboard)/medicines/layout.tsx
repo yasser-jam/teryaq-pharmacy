@@ -18,17 +18,11 @@ import MedicineCard from '../../../components/medicine/MedicineCard';
 import { MdTableChart, MdGridView } from 'react-icons/md';
 import SysViewMode from '../../../components/system/SysViewMode';
 import BaseBadge from '../../../components/base/BaseBadge';
-import BaseTest from '../../../components/base/BaseTest';
+import { Medicine } from '../../../lib/types';
+import { api } from '../../../lib/api';
+import { useQuery } from '@tanstack/react-query';
 
 type ViewMode = 'table' | 'cards';
-
-interface Medicine {
-  id: number;
-  name: string;
-  scientificName: string;
-  status: string;
-  image?: string;
-}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [viewMode, setViewMode] = useState<ViewMode>('table');
@@ -36,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const columns: ColumnDef<Medicine>[] = [
     {
       header: 'Name',
-      accessorKey: 'name',
+      accessorKey: 'tradeName',
       cell: (info) => <strong>{String(info.getValue())}</strong>,
     },
     {
@@ -56,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return (
           <BaseBadge
             colorPalette={
-              info.row.original.status === 'active' ? 'green' : 'red'
+              info.row.original.requiresPrescription ? 'green' : 'red'
             }
           >
             {value}
@@ -68,58 +62,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       header: 'Actions',
       cell: ({ row }) => (
         <MenuButton
-          onEdit={() => alert(`Edit ${row.original.name}`)}
-          onDelete={() => alert(`Delete ${row.original.name}`)}
+          onEdit={() => alert(`Edit ${row.original.tradeName}`)}
+          onDelete={() => alert(`Delete ${row.original.tradeName}`)}
         />
       ),
     },
   ];
 
-  const data: Medicine[] = [
-    {
-      id: 1,
-      name: 'Aspirin',
-      scientificName: 'Acetylsalicylic acid',
-      status: 'active',
-      image: '/medicines/aspirin.jpg',
-    },
-    {
-      id: 2,
-      name: 'Ibuprofen',
-      scientificName: 'Isobutylphenylpropanoic acid',
-      status: 'active',
-      image: '/medicines/ibuprofen.jpg',
-    },
-    {
-      id: 3,
-      name: 'Amoxicillin',
-      scientificName: 'Amoxicillin trihydrate',
-      status: 'inactive',
-      image: '/medicines/amoxicillin.jpg',
-    },
-    {
-      id: 4,
-      name: 'Paracetamol',
-      scientificName: 'N-acetyl-para-aminophenol',
-      status: 'active',
-      image: '/medicines/paracetamol.jpg',
-    },
-    {
-      id: 5,
-      name: 'Omeprazole',
-      scientificName:
-        '5-methoxy-2-[[(4-methoxy-3,5-dimethyl-2-pyridinyl)methyl]sulfinyl]-1H-benzimidazole',
-      status: 'active',
-      image: '/medicines/omeprazole.jpg',
-    },
-    {
-      id: 6,
-      name: 'Metformin',
-      scientificName: 'N,N-dimethylbiguanide',
-      status: 'active',
-      image: '/medicines/metformin.jpg',
-    },
-  ];
+  const { data, isLoading } = useQuery<Medicine[]>({
+    queryKey: ['medicines'],
+    queryFn: () => api('/pharmacy_products'),
+  })
 
   const router = useRouter();
 
@@ -139,15 +92,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Conditional Rendering based on view mode */}
       {viewMode === 'table' ? (
-        <BaseTable columns={columns} data={data} />
+        <BaseTable columns={columns} data={data ?? []} />
       ) : (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} gap={6}>
-          {data.map((medicine) => (
+          {data?.map((medicine) => (
             <MedicineCard
               key={medicine.id}
               medicine={medicine}
-              onEdit={() => alert(`Edit ${medicine.name}`)}
-              onDelete={() => alert(`Delete ${medicine.name}`)}
+              onEdit={() => alert(`Edit ${medicine.tradeName}`)}
+              onDelete={() => alert(`Delete ${medicine.tradeName}`)}
             />
           ))}
         </SimpleGrid>

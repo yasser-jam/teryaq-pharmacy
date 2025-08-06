@@ -1,4 +1,5 @@
 export interface Medicine {
+  id: number;
   tradeName: string;
   scientificName: string;
   concentration?: string;
@@ -33,6 +34,17 @@ export interface Type {
 export interface Form {
   id: number;
   name: string;
+}
+
+export interface MedicineRecord {
+  id: number;
+  tradeName: string;
+  scientificName: string;
+  typeId: number;
+  formId: number;
+  manufacturerId: number;
+  categoryIds: number[];
+  translations: MedicineTranslation[];
 }
 
 export interface SaleItemRecord {
