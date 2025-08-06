@@ -34,3 +34,31 @@ export interface Form {
   id: number;
   name: string;
 }
+
+export interface SaleItemRecord {
+  id: number,
+  stockItemId: number;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  discount: number;
+  discountType: string;
+  subTotal: number;
+}
+
+export interface SaleRecord {
+  id: number;
+  customerId: number;
+  customerName: string;
+  invoiceDate: string;
+  totalAmount: number;
+  paymentType: string;
+  paymentMethod: string;
+  currency: string;
+  discount: number;
+  discountType: string;
+  paidAmount: number;
+  remainingAmount: number;
+  status: string;
+  items: SaleItemRecord[];
+}

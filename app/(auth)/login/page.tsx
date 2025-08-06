@@ -82,20 +82,18 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <VStack gap={4}>
                 <SysField
-                  name="email"
                   label="Email Address"
                   type="email"
                   placeholder="Enter your email"
-                  register={register}
+                  register={register('email')}
                   error={errors.email?.message}
                 />
 
                 <SysField
-                  name="password"
                   label="Password"
                   type="password"
                   placeholder="Enter your password"
-                  register={register}
+                  register={register('password')}
                   error={errors.password?.message}
                 />
 
