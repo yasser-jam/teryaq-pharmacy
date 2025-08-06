@@ -98,11 +98,6 @@ const EmployeeEditDialog: React.FC<EmployeeEditDialogProps> = ({
       name: 'workingHours',
     });
 
-  // Don't render until mounted to prevent hydration mismatch
-  if (!mounted) {
-    return null;
-  }
-
   const addShift = (dayIndex: number) => {
     const currentDay = workingHoursFields[dayIndex];
     const newShifts = [
